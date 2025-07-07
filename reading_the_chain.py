@@ -17,27 +17,19 @@ def connect_to_eth():
 
 
 def connect_with_middleware(contract_json):
-    with open(contract_json, 'r') as f:
-        contract_data = json.load(f)
+    with open(contract_json, "r") as f:
+        contract_info = json.load(f)
 
-    # Wrap ABI list inside a dict if needed
-    abi = None
-    if isinstance(contract_data, list):
-        # Codio expects 'abi' key — simulate it
-        abi = contract_data
-    elif isinstance(contract_data, dict) and "abi" in contract_data:
-        abi = contract_data["abi"]
-    else:
-        raise ValueError("'abi'")
-
-    bnb_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
-    w3 = Web3(HTTPProvider(bnb_url))
+    w3 = Web3(Web3.HTTPProvider("https://data-seed-prebsc-1-s1.binance.org:8545/"))
     w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
 
+    # Hardcoded address from instructions
     contract_address = Web3.to_checksum_address("0xaA7CAaDA823300D18D3c43f65569a47e78220073")
-    contract = w3.eth.contract(address=contract_address, abi=abi)
+    contract_abi = contract_info["abi"]
 
+    contract = w3.eth.contract(address=contract_address, abi=contract_abi)
     return w3, contract
+
 
 def is_ordered_block(w3, block_num):
     """
