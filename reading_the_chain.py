@@ -23,9 +23,8 @@ def connect_with_middleware(contract_json):
     w3 = Web3(Web3.HTTPProvider("https://data-seed-prebsc-1-s1.binance.org:8545/"))
     w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
 
-    # Hardcoded address from instructions
-    contract_address = Web3.to_checksum_address("0xaA7CAaDA823300D18D3c43f65569a47e78220073")
-    contract_abi = contract_info["abi"]
+    contract_address = Web3.to_checksum_address(contract_info["bsc"]["address"])
+    contract_abi = contract_info["bsc"]["abi"]
 
     contract = w3.eth.contract(address=contract_address, abi=contract_abi)
     return w3, contract
