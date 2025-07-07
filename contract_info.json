@@ -1,4 +1,5 @@
-{"bsc": { "address": "0xaA7CAaDA823300D18D3c43f65569a47e78220073",
+{
+ "address": "0xaA7CAaDA823300D18D3c43f65569a47e78220073",
  "abi": [
   {
     "type": "constructor",
@@ -471,4 +472,5 @@
     ],
     "anonymous": false
   }
-] } }
+] 
+} 
